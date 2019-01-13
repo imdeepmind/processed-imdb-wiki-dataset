@@ -2,24 +2,33 @@ import numpy as np
 from scipy.io import loadmat
 import pandas as pd
 
-cols = ['dob', 'photo_taken', 'full_path', 'gender', 'face_score']
+cols = ['dob', 'photo_taken', 'full_path', 'gender', 'name', 'face_score1', 'face_score2']
 
-path = "imdb.mat"
+mat_file = "imdb.mat"
 
-data = loadmat(path)
+data = loadmat(mat_file)
 data = data['imdb']
 
-dob = data[0][0][0][0]
 photo_taken = data[0][0][1][0]
 full_path = data[0][0][2][0]
 gender = data[0][0][3][0]
-face_score = data[0][0][6][0]
+name = data[0][0][4][0]
+face_score1 = data[0][0][6][0]
+face_score2 = data[0][0][7][0]
 
 path = []
-for p in full_path:
-    path.append(p[0])
+for file in full_path:
+    path.append(file[0])
 
-theData = np.vstack((dob,photo_taken,path,gender, face_score)).T
+dob = []
+for file in path:
+    dob.append(file.split('_')[2])
+
+names = []
+for n in name:
+    names.append(n[0])
+
+theData = np.vstack((dob,photo_taken,path,gender,names,face_score1,face_score2)).T
 
 dataFrame = pd.DataFrame(theData)
 dataFrame.columns = cols
