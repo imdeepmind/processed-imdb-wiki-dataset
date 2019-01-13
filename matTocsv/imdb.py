@@ -26,7 +26,10 @@ for file in path:
 
 names = []
 for n in name:
-    names.append(n[0])
+    if len(n) > 0:
+        names.append(n[0])
+    else:
+        names.append(np.nan)
 
 theData = np.vstack((dob,photo_taken,path,gender,names,face_score1,face_score2)).T
 
