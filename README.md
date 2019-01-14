@@ -8,11 +8,11 @@ IMDB WIKI dataset is the largest dataset of face images with gender, age and nam
 
 ## Table of contents:
 - [Introduction](#introduction)
-- [IMDB WIKI Dataset](#dataset)
-- [The Problem](#the)
+- [IMDB WIKI Dataset](#imdb-wiki-dataset)
+- [The Problem](#the-problem)
 - [The Solution](#the-solution)
-- [File Structure](#file)
-- [How to Run Locally](#how)
+- [File Structure](#file-structure)
+- [How to Run Locally](#how-to-run-locally)
 - [Acknowledgments](#acknowledgments)
 
 ## Introduction
