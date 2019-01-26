@@ -31,14 +31,16 @@ for n in name:
     else:
         names.append(np.nan)
 
-theData = np.vstack((dob,photo_taken,path,gender,names,face_score1,face_score2)).T
+genders = []
+for n in range(len(gender)):
+    if gender[n] == 1:
+        genders.append('male')
+    else:
+	    genders.append('female')
+
+theData = np.vstack((dob,photo_taken,path,genders,names,face_score1,face_score2)).T
 
 dataFrame = pd.DataFrame(theData)
 dataFrame.columns = cols
 
 dataFrame.to_csv('processedData/mat/wiki/wiki_meta.csv')
-
-
-
-
-

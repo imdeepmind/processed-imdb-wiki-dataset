@@ -8,6 +8,7 @@ wiki = wiki.drop(['Unnamed: 0'], axis=1)
 n = len(wiki)
 
 paths = wiki['full_path'].values.reshape(1,n)[0]
+scores = wiki['face_score1'].values.reshape(1,n)[0]
 details = wiki.drop(['full_path', 'face_score1', 'face_score2'], axis=1).values
 
 BATCH_SIZE = 10000
@@ -34,14 +35,17 @@ for batch in range(NO_BATCHES):
         path = 'unprocessedData/images/wiki_crop/' + paths[i]
     
         print('-- (BATCH-'+ str(batch+1) +')(' + str(i+1) + ') Currently processing image with path ' + path + ' --')
+
+        if scores[i] == -np.inf:
+            print('-- (BATCH-'+ str(batch+1) +')(' + str(i+1) + ') Image does not have any face ' + path + ' --')
+        else:
+            img = cv2.imread(path, 0)
+            img = cv2.resize(img, (64,64))
+            img = img.reshape(1,4096)
         
-        img = cv2.imread(path, 0)
-        img = cv2.resize(img, (64,64))
-        img = img.reshape(1,4096)
-    
-        row = np.hstack((img, details[i].reshape(1,4)))
-        
-        data.append(row[0])
+            row = np.hstack((img, details[i].reshape(1,4)))
+            
+            data.append(row[0])
     
     columns = []
     for i in range(4096):

@@ -8,7 +8,8 @@ imdb = imdb.drop(['Unnamed: 0'], axis=1)
 n = len(imdb)
 
 paths = imdb['full_path'].values.reshape(1,n)[0]
-details = imdb.drop(['full_path', 'face_score1', 'face_score2'], axis=1).values
+scores = imdb['face_score1'].values.reshape(1,n)[0]
+details = imdb.drop(['full_path', 'face_score1', 'face_score2', 'imdb_id'], axis=1).values
 
 BATCH_SIZE = 10000
 BATCH_NUMBER = 1
@@ -35,13 +36,16 @@ for batch in range(NO_BATCHES):
     
         print('-- (BATCH-'+ str(batch+1) +')(' + str(i+1) + ') Currently processing image with path ' + path + ' --')
         
-        img = cv2.imread(path, 0)
-        img = cv2.resize(img, (64,64))
-        img = img.reshape(1,4096)
-    
-        row = np.hstack((img, details[i].reshape(1,4)))
+        if scores[i] == -np.inf:
+            print('-- (BATCH-'+ str(batch+1) +')(' + str(i+1) + ') Image does not have any face ' + path + ' --')
+        else:
+            img = cv2.imread(path, 0)
+            img = cv2.resize(img, (64,64))
+            img = img.reshape(1,4096)
         
-        data.append(row[0])
+            row = np.hstack((img, details[i].reshape(1,4)))
+            
+            data.append(row[0])
     
     columns = []
     for i in range(4096):
