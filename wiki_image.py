@@ -36,16 +36,23 @@ for batch in range(NO_BATCHES):
     
         print('-- (BATCH-'+ str(batch+1) +')(' + str(i+1) + ') Currently processing image with path ' + path + ' --')
 
-        if scores[i] == -np.inf:
-            print('-- (BATCH-'+ str(batch+1) +')(' + str(i+1) + ') Image does not have any face ' + path + ' --')
-        else:
-            img = cv2.imread(path, 0)
-            img = cv2.resize(img, (64,64))
-            img = img.reshape(1,4096)
+        haar_cascade_face = cv2.CascadeClassifier('haarcascade_frontalface_alt2.xml')
+
+        img = cv2.imread(path, 0)
+
+        face = haar_cascade_face.detectMultiScale(img, 1.1, 3)
+
+        if len(face) > 0:
+            for x,y,w,h in face:
+                roi = img[y:y+h,x:x+w]
+                
+                face = cv2.resize(roi, (64,64))
         
-            row = np.hstack((img, details[i].reshape(1,4)))
-            
-            data.append(row[0])
+                face = face.reshape(1,4096)
+        
+                row = np.hstack((face, details[i].reshape(1,4)))
+
+                data.append(row[0])
     
     columns = []
     for i in range(4096):
