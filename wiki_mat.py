@@ -2,7 +2,7 @@ import numpy as np
 from scipy.io import loadmat
 import pandas as pd
 
-cols = ['dob', 'photo_taken', 'full_path', 'gender', 'name', 'face', 'face_score1', 'face_score2']
+cols = ['dob', 'photo_taken', 'full_path', 'gender', 'name', 'face0', 'face1', 'face2', 'face3', 'face_score1', 'face_score2']
 
 mat_file = "unprocessedData/mat/wiki.mat"
 
@@ -40,11 +40,22 @@ for n in range(len(gender)):
         genders.append('male')
     else:
 	    genders.append('female')
+
+face0 = []
+face1 = []
+face2 = []
+face3 = []
+for f in face:
+    x, y, w, h = f[0]
+    face0.append(x)
+    face1.append(y)
+    face2.append(w)
+    face3.append(h)
     
     
 del full_path, name, gender
 
-theData = np.vstack((dob,photo_taken,path,genders,names,face, face_score1,face_score2)).T
+theData = np.vstack((dob,photo_taken,path,genders,names,face0, face1, face2, face3, face_score1,face_score2)).T
 
 dataFrame = pd.DataFrame(theData)
 dataFrame.columns = cols
