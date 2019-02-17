@@ -9,7 +9,7 @@ n = len(wiki)
 
 paths = wiki['full_path'].values.reshape(1,n)[0]
 scores = wiki['face_score1'].values.reshape(1,n)[0]
-details = wiki.drop(['full_path', 'face_score1', 'face_score2'], axis=1).values
+details = wiki.drop(['full_path', 'face_score1', 'face_score2', 'face0', 'face1', 'face2', 'face3'], axis=1).values
 
 BATCH_SIZE = 10000
 BATCH_NUMBER = 1
@@ -53,6 +53,8 @@ for batch in range(NO_BATCHES):
                 row = np.hstack((face, details[i].reshape(1,4)))
 
                 data.append(row[0])
+
+                break
     
     columns = []
     for i in range(4096):
