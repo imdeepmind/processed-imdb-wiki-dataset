@@ -9,7 +9,7 @@ n = len(imdb)
 
 paths = imdb['full_path'].values.reshape(1,n)[0]
 scores = imdb['face_score1'].values.reshape(1,n)[0]
-details = imdb.drop(['full_path', 'face_score1', 'face_score2', 'celeb_id', 'face0', 'face1', 'face2', 'face3], axis=1).values
+details = imdb.drop(['full_path', 'face_score1', 'face_score2', 'celeb_id', 'face0', 'face1', 'face2', 'face3', 'name'], axis=1).values
 
 BATCH_SIZE = 10000
 BATCH_NUMBER = 1
@@ -50,7 +50,7 @@ for batch in range(NO_BATCHES):
         
                 face = face.reshape(1,4096)
         
-                row = np.hstack((face, details[i].reshape(1,4)))
+                row = np.hstack((face, details[i].reshape(1,3)))
 
                 data.append(row[0])
 
