@@ -9,7 +9,7 @@ n = len(wiki)
 paths = wiki['path'].values.reshape(1,n)[0]
 details = wiki.drop(['path'], axis=1).values
 
-BATCH_SIZE = 10000
+BATCH_SIZE = 50000
 BATCH_NUMBER = 1
 NO_BATCHES = (n // BATCH_SIZE) + 1
 ELEMENTS = []
@@ -42,7 +42,7 @@ for batch in range(NO_BATCHES):
         
         row = np.hstack((img, details[i]))
         
-        data.append(row[0])
+        data.append(row)
     
     columns = []
     for i in range(67500):
