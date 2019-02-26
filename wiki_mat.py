@@ -53,4 +53,4 @@ theData = np.vstack((age, genders, path, face_score1, face_score2)).T
 dataFrame = pd.DataFrame(theData)
 dataFrame.columns = cols
 
-dataFrame.to_csv('processedData/mat/wiki/wiki_meta.csv')
+dataFrame.to_csv('processedData/mat/wiki/wiki_meta.csv', index=False)
