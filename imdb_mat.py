@@ -55,6 +55,11 @@ theData = np.vstack((age, genders, path, face_score1, face_score2)).T
 dataFrame = pd.DataFrame(theData)
 dataFrame.columns = cols
 
+dataFrame = dataFrame[dataFrame['face_score2'] == 'nan']
+dataFrame = dataFrame[dataFrame['face_score1'] != '-inf']
+
+dataFrame = dataFrame.drop(['face_score1', 'face_score2'], axis=1)
+
 dataFrame.to_csv('processedData/mat/imdb/imdb_meta.csv', index=False)
 
 

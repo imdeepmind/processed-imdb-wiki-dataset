@@ -3,13 +3,11 @@ import pandas as pd
 import cv2
 
 imdb = pd.read_csv('processedData/mat/imdb/imdb_meta.csv')
-imdb = imdb.drop(['Unnamed: 0'], axis=1)
 
 n = len(imdb)
 
-paths = imdb['full_path'].values.reshape(1,n)[0]
-scores = imdb['face_score1'].values.reshape(1,n)[0]
-details = imdb.drop(['full_path', 'face_score1', 'face_score2', 'celeb_id', 'face0', 'face1', 'face2', 'face3', 'name'], axis=1).values
+paths = imdb['path'].values.reshape(1,n)[0]
+details = imdb.drop(['path'], axis=1).values
 
 BATCH_SIZE = 10000
 BATCH_NUMBER = 1
@@ -35,32 +33,22 @@ for batch in range(NO_BATCHES):
         path = 'unprocessedData/images/imdb_crop/' + paths[i]
     
         print('-- (BATCH-'+ str(batch+1) +')(' + str(i+1) + ') Currently processing image with path ' + path + ' --')
+
+        img = cv2.imread(path, 1)
         
-        haar_cascade_face = cv2.CascadeClassifier('haarcascade_frontalface_alt2.xml')
-
-        img = cv2.imread(path, 0)
-
-        face = haar_cascade_face.detectMultiScale(img, 1.1, 3)
-
-        if len(face) > 0:
-            for x,y,w,h in face:
-                roi = img[y:y+h,x:x+w]
-                
-                face = cv2.resize(roi, (64,64))
+        img = cv2.resize(img, (150,150))
         
-                face = face.reshape(1,4096)
+        img = img.flatten()
         
-                row = np.hstack((face, details[i].reshape(1,3)))
-
-                data.append(row[0])
-
-                break
+        row = np.hstack((img, details[i]))
+        
+        data.append(row[0])
     
     columns = []
-    for i in range(4096):
+    for i in range(67500):
         columns.append('pixel' + str(i+1))
     
-    columns = columns + ['dob', 'photo_taken', 'gender', 'name']
+    columns = columns + ['age', 'gender']
         
     dataFrame = pd.DataFrame(data)
 
