@@ -9,7 +9,7 @@ n = len(wiki)
 paths = wiki['path'].values.reshape(1,n)[0]
 details = wiki.drop(['path'], axis=1).values
 
-BATCH_SIZE = 50000
+BATCH_SIZE = 10000
 BATCH_NUMBER = 1
 NO_BATCHES = (n // BATCH_SIZE) + 1
 ELEMENTS = []
