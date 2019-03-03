@@ -45,7 +45,7 @@ for image in D_train:
         cv2.imwrite('processedData/images/train/male/' + str(counter) + '.jpg', img)
     else:
         cv2.imwrite('processedData/images/train/female/' + str(counter) + '.jpg', img)
-    print('--('+str(counter)+')Image Processing--')
+    print('--('+str(counter)+')Processing--')
     counter += 1
 
 counter = 0
