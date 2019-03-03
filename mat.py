@@ -33,10 +33,10 @@ imdb_path = []
 wiki_path = []
 
 for path in imdb_full_path:
-    imdb_path.append(path[0])
+    imdb_path.append('imdb_crop/' + path[0])
 
 for path in wiki_full_path:
-    wiki_path.append(path[0])
+    wiki_path.append('wiki_crop/' + path[0])
 
 imdb_genders = []
 wiki_genders = []
@@ -57,7 +57,7 @@ imdb_dob = []
 wiki_dob = []
 
 for file in imdb_path:
-    temp = file.split('_')[2]
+    temp = file.split('_')[3]
     temp = temp.split('-')
     if len(temp[1]) == 1:
         temp[1] = '0' + temp[1]
@@ -72,7 +72,7 @@ for file in imdb_path:
     imdb_dob.append('-'.join(temp))
 
 for file in wiki_path:
-    wiki_dob.append(file.split('_')[1])
+    wiki_dob.append(file.split('_')[2])
 
 
 imdb_age = []
@@ -115,5 +115,7 @@ meta = meta[meta['face_score1'] != '-inf']
 meta = meta[meta['face_score2'] == 'nan']
 
 meta = meta.drop(['face_score1', 'face_score2'], axis=1)
+
+meta = meta.sample(frac=1)
 
 meta.to_csv('meta.csv', index=False)
