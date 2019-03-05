@@ -21,9 +21,6 @@ meta = meta.values
 # Spliting dataset into training and testing set
 D_train, D_test = train_test_split(meta, test_size=0.2, random_state=42)
 
-# Image path
-paths = {'imdb':'imdb_crop', 'wiki':'wiki_crop/'}
-
 # Making the directory structure
 for i in range(102):
     output_dir_train_male = 'dataset/age/train/' + str(i)

@@ -39,9 +39,6 @@ D_train = pd.concat((D_train_male, D_train_female))
 D_train = D_train.sample(frac=1)
 D_test = D_test.sample(frac=1)
 
-# Image paths
-paths = {'imdb':'imdb_crop', 'wiki':'wiki_crop/'}
-
 # Generating folder struture for the data
 output_dir_train_male = 'dataset/gender/train/male'
 output_dir_train_female = 'dataset/gender/train/female'
@@ -77,7 +74,7 @@ for image in D_train.values:
 counter = 0
 
 for image in D_test.values:
-    img = cv2.imread(paths[image[3]] + '/' + image[1], 1)
+    img = cv2.imread(image[1], 1)
     img = cv2.resize(img, (128,128))
     if image[0] == 'male':
         cv2.imwrite('dataset/gender/test/male/' + str(counter) + '.jpg', img)
