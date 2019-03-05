@@ -1,14 +1,21 @@
+# Importing dependencies
 import pandas as pd
 import numpy as np
 import cv2
 import os
 from sklearn.model_selection import train_test_split
 
+# Loading the data
 meta = pd.read_csv('meta.csv')
+
+# Deleting the age column as we dont need it
 meta = meta.drop(['age'], axis=1)
 
+# Spliting the dataset into train and test set
 D_train, D_test = train_test_split(meta, test_size=0.1, random_state=42)
 
+# The dataset contains more male faces that female faces. This can couse some problems.
+# One feature can start dominating on other feature. To solve this I am selecting equal number of male and female faces in the training set
 D_train_male = D_train[D_train['gender'] == 'male']
 D_train_female = D_train[D_train['gender'] == 'female']
 
@@ -28,11 +35,14 @@ else:
 
 D_train = pd.concat((D_train_male, D_train_female))
 
+# Shuffling the dataset
 D_train = D_train.sample(frac=1)
 D_test = D_test.sample(frac=1)
 
+# Image paths
 paths = {'imdb':'imdb_crop', 'wiki':'wiki_crop/'}
 
+# Generating folder struture for the data
 output_dir_train_male = 'dataset/gender/train/male'
 output_dir_train_female = 'dataset/gender/train/female'
 
@@ -51,6 +61,7 @@ if not os.path.exists(output_dir_test_male):
 if not os.path.exists(output_dir_test_female):
     os.makedirs(output_dir_test_female)
 
+# Finally processing the image training and testting set
 counter = 0
 
 for image in D_train.values:
