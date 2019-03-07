@@ -39,7 +39,7 @@ The dataset is great for research purposes. It contains more than `500 thousand+
 In this project, I filter all the images, resized them all to `128x128`, remove all the images with invalid age, fix the gender distribution problem, and save them in the proper format. Along with that, I’ve also processed the `.mat` files and converted them in `.csv` files also.
 
 ## File Structure
-This repository contains 4 files
+This repository contains 3 files
  - `mat.py`
  - `gender.py`
  - `age.py`

@@ -1,6 +1,4 @@
-processedData/
-unprocessedData/
-experiment.py
+.ipynb_checkpoints/
 meta.csv
 imdb_crop/
 wiki_crop/
