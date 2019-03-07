@@ -56,7 +56,7 @@ counter = 0
 for image in D_test:
     img = cv2.imread(image[1], 1)
     img = cv2.resize(img, (128,128))
-    cv2.imwrite('dataset/age/test/' + str(image[0]) + str(counter) + '.jpg', img)
+    cv2.imwrite('dataset/age/test/' + str(image[0]) +  '/' + str(counter) + '.jpg', img)
     print('--('+str(counter)+')Processing--')
     counter += 1
 
